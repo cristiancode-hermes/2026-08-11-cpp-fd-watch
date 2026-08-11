@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1e1e2e;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 40px;
+  }
+  .terminal {
+    background: #181825;
+    border-radius: 12px;
+    padding: 24px 28px;
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #cdd6f4;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    max-width: 940px;
+    width: 100%;
+    border: 1px solid #313244;
+  }
+  .terminal .title-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding-bottom: 16px; border-bottom: 1px solid #313244;
+    margin-bottom: 16px;
+  }
+  .terminal .title-bar .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .terminal .title-bar .dot.r { background: #f38ba8; }
+  .terminal .title-bar .dot.y { background: #f9e2af; }
+  .terminal .title-bar .dot.g { background: #a6e3a1; }
+  .terminal .title-bar .title { margin-left: 12px; font-size: 13px; color: #6c7086; }
+  .terminal .line { white-space: pre; }
+  .terminal .highlight { color: #89b4fa; }
+  .terminal .green { color: #a6e3a1; }
+  .terminal .yellow { color: #f9e2af; }
+  .terminal .red { color: #f38ba8; }
+  .terminal .dim { color: #6c7086; }
+  .terminal .cyan { color: #89dceb; }
+  .terminal .bold { color: #cdd6f4; }
+  .terminal .sep { color: #45475a; }
+  .terminal .prompt { color: #a6adc8; }
+  .terminal .header { color: #f5e0dc; }
+</style>
+</head>
+<body>
+<div class="terminal">
+  <div class="title-bar">
+    <div class="dot r"></div>
+    <div class="dot y"></div>
+    <div class="dot g"></div>
+    <span class="title">fd-watch — File Descriptor Watch (C++23)</span>
+  </div>
+
+  <div class="line prompt">  $ ./fd-watch</div>
+  <div class="line bold">  FD WATCH — Linux file descriptor usage  (/proc/sys/fs/file-nr + /proc/&lt;pid&gt;/fd)</div>
+  <div class="line sep">  ------------------------------------------------------------------------------</div>
+  <div class="line"><span class="cyan">  SYSTEM FDS      </span>allocated <span class="bold">3.040</span>   unused <span class="bold">0</span>   file-max <span class="bold">9.22E</span>   nr_open <span class="bold">1.05M</span>   <span class="bold yellow">0.3%</span></div>
+  <div class="line"><span class="cyan">  PROCESSES       </span><span class="bold">73</span> scanned  <span class="yellow">1 without access</span>   total fds <span class="bold">1.295</span>   avg <span class="bold">17.7</span>/proc</div>
+  <div class="line"><span class="cyan">  STATES          </span>running <span class="bold">1</span>   sleeping <span class="bold">72</span>   disk <span class="bold">0</span>   zombie <span class="bold">0</span>   idle <span class="bold">0</span>   other <span class="bold">0</span></div>
+  <div class="line"></div>
+  <div class="line bold">  TOP FD CONSUMERS  (min 0 fds, showing 10)</div>
+  <div class="line dim">   PID     NAME                        FDS     SOFT LIMIT   %LIMIT  ST  BAR</div>
+  <div class="line">  710060  hermes                         69        1.024     <span class="green">6.7%</span>   S   <span class="green">||||||||||||||||||||</span></div>
+  <div class="line">      12  hermes                         68        1.024     <span class="green">6.6%</span>   S   <span class="green">||||||||||||||||||||</span></div>
+  <div class="line">     114  forgejo                        27      524.287     <span class="green">0.0%</span>   S   <span class="green">||||||||</span><span class="dim">............</span></div>
+  <div class="line">  507442  hermes                         23        1.024     <span class="green">2.2%</span>   S   <span class="green">|||||||</span><span class="dim">.............</span></div>
+  <div class="line">     354  node-MainThread                21      524.288     <span class="green">0.0%</span>   S   <span class="green">||||||</span><span class="dim">..............</span></div>
+  <div class="line"></div>
+
+  <div class="line prompt">  $ ./fd-watch --top 5 --min 10</div>
+  <div class="line bold">  FD WATCH — Linux file descriptor usage  (/proc/sys/fs/file-nr + /proc/&lt;pid&gt;/fd)</div>
+  <div class="line sep">  ------------------------------------------------------------------------------</div>
+  <div class="line"><span class="cyan">  SYSTEM FDS      </span>allocated <span class="bold">3.040</span>   unused <span class="bold">0</span>   file-max <span class="bold">9.22E</span>   nr_open <span class="bold">1.05M</span>   <span class="bold yellow">0.3%</span></div>
+  <div class="line"><span class="cyan">  PROCESSES       </span><span class="bold">73</span> scanned  <span class="yellow">1 without access</span>   total fds <span class="bold">1.295</span>   avg <span class="bold">17.7</span>/proc</div>
+  <div class="line"><span class="cyan">  RATES           </span>fd alloc <span class="bold">+1.0/s</span>   process fds <span class="bold">+2.0/s</span></div>
+  <div class="line"><span class="cyan">  STATES          </span>running <span class="bold">1</span>   sleeping <span class="bold">72</span>   disk <span class="bold">0</span>   zombie <span class="bold">0</span>   idle <span class="bold">0</span>   other <span class="bold">0</span></div>
+  <div class="line"></div>
+  <div class="line bold">  TOP FD CONSUMERS  (min 10 fds, showing 5)</div>
+  <div class="line dim">   PID     NAME                        FDS     SOFT LIMIT   %LIMIT  ST  BAR</div>
+  <div class="line">  710060  hermes                         70        1.024     <span class="green">6.8%</span>   S   <span class="green">||||||||||||||||||||</span></div>
+  <div class="line">      12  hermes                         68        1.024     <span class="green">6.6%</span>   S   <span class="green">||||||||||||||||||||</span></div>
+  <div class="line">     114  forgejo                        27      524.287     <span class="green">0.0%</span>   S   <span class="green">||||||||</span><span class="dim">............</span></div>
+  <div class="line">  507442  hermes                         25        1.024     <span class="green">2.4%</span>   S   <span class="green">|||||||</span><span class="dim">.............</span></div>
+  <div class="line">     354  node-MainThread                21      524.288     <span class="green">0.0%</span>   S   <span class="green">||||||</span><span class="dim">..............</span></div>
+  <div class="line"></div>
+
+  <div class="line prompt">  $ ./fd-watch --json | python3 -m json.tool</div>
+  <div class="line sep">  {</div>
+  <div class="line">    <span class="cyan">"system"</span>: {<span class="cyan">"allocated"</span>:3040,<span class="cyan">"unused"</span>:0,<span class="cyan">"file_max"</span>:9223372036854775807,<span class="cyan">"nr_open"</span>:1048576,<span class="cyan">"utilization_pct"</span>:0.29},</div>
+  <div class="line">    <span class="cyan">"processes"</span>: [{<span class="cyan">"pid"</span>:710060,<span class="cyan">"name"</span>:<span class="yellow">"hermes"</span>,<span class="cyan">"fds"</span>:69,<span class="cyan">"soft"</span>:1024,<span class="cyan">"hard"</span>:524288,<span class="cyan">"state"</span>:<span class="yellow">"S"</span>,<span class="cyan">"limit_pct"</span>:6.74},</div>
+  <div class="line">             {<span class="cyan">"pid"</span>:12,<span class="cyan">"name"</span>:<span class="yellow">"hermes"</span>,<span class="cyan">"fds"</span>:68,<span class="cyan">"soft"</span>:1024,<span class="cyan">"hard"</span>:524288,<span class="cyan">"state"</span>:<span class="yellow">"S"</span>,<span class="cyan">"limit_pct"</span>:6.64},</div>
+  <div class="line">             {<span class="cyan">"pid"</span>:114,<span class="cyan">"name"</span>:<span class="yellow">"forgejo"</span>,<span class="cyan">"fds"</span>:27,<span class="cyan">"soft"</span>:524287,<span class="cyan">"hard"</span>:524288,<span class="cyan">"state"</span>:<span class="yellow">"S"</span>,<span class="cyan">"limit_pct"</span>:0.01}],</div>
+  <div class="line">    <span class="cyan">"summary"</span>: {<span class="cyan">"scanned"</span>:73,<span class="cyan">"no_access"</span>:1,<span class="cyan">"total_fds"</span>:1295,<span class="cyan">"avg_fds"</span>:17.7,<span class="cyan">"pressure"</span>:0}</div>
+  <div class="line sep">  }</div>
+  <div class="line"></div>
+  <div class="line prompt">  $ ./fd-watch --selftest  │</div>
+  <div class="line green">  17 passed, 0 failed</div>
+</div>
+</body>
+</html>
